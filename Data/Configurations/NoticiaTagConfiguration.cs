@@ -6,5 +6,6 @@ public class NoticiaTagConfiguration : IEntityTypeConfiguration<NoticiaTag>
     {
         builder.ToTable("NoticiaTag");
         builder.HasKey(c => c.Id);
+
     }
 }

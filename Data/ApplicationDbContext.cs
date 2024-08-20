@@ -3,6 +3,10 @@
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
     : IdentityDbContext(options)
 {
+    public DbSet<Tag> Tags { get; set; }
+    public DbSet<NoticiaTag> NoticiaTags { get; set; }
+    public DbSet<Noticia> Noticias { get; set; }
+
     private static readonly ILoggerFactory _logger = LoggerFactory
         .Create(p => p
             .AddJsonConsole());
@@ -18,5 +22,27 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
                         maxRetryDelay: TimeSpan.FromSeconds(5), 
                         errorNumbersToAdd:null)
             );
+    }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+    }
+    void MapearPropriedadesEsquecidas( ModelBuilder modelBuilder)
+    {
+        foreach (var entity in modelBuilder.Model.GetEntityTypes())
+        {
+            var properties = entity
+                .GetProperties()
+                .Where(p => p.ClrType == typeof(string));
+            foreach (var property in properties)
+            {
+                if (string.IsNullOrEmpty(property.GetColumnType())
+                    && !property.GetMaxLength().HasValue)
+                {
+                    property.SetColumnType("VARCHAR(100)");
+                }
+            }
+        }
     }
 }
