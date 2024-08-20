@@ -3,7 +3,9 @@
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
     : IdentityDbContext(options)
 {
-    private static readonly ILoggerFactory _logger = LoggerFactory.Create(p => p.AddJsonConsole());
+    private static readonly ILoggerFactory _logger = LoggerFactory
+        .Create(p => p
+            .AddJsonConsole());
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -15,7 +17,6 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
                         maxRetryCount:2, 
                         maxRetryDelay: TimeSpan.FromSeconds(5), 
                         errorNumbersToAdd:null)
-                    .MigrationsHistoryTable("DekaNews")
             );
     }
 }
