@@ -12,7 +12,7 @@
         // GET: Noticias
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Noticias.Include(c => c.Usuario);
+        var applicationDbContext = _context.Noticias.Include(c => c.Usuario).Include(t=> t.Tags);
             return View(await applicationDbContext.ToListAsync());
         }
 
