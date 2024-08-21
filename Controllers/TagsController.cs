@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using DekaNews.Data;
-using DekaNews.Models;
+﻿namespace DekaNews.Controllers;
 
-namespace DekaNews.Controllers
-{
-    public class TagsController : Controller
+public class TagsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
@@ -154,4 +144,4 @@ namespace DekaNews.Controllers
             return _context.Tags.Any(e => e.Id == id);
         }
     }
-}
+

@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using DekaNews.Data;
-using DekaNews.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿namespace DekaNews.Controllers;
 
-namespace DekaNews.Controllers
-{
     public class NoticiasController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -48,9 +36,15 @@ namespace DekaNews.Controllers
 
         // GET: Noticias/Create
         [Authorize]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var userId = User.Claims.FirstOrDefault()!.Value;
+            Noticia noticia = new()
+            {
+                Usuario = await _context.Users.FirstAsync(u => u.Id.Equals(userId)),
+                UsuarioId = userId
+            };
+            return View(noticia);
         }
 
         // POST: Noticias/Create
@@ -60,8 +54,15 @@ namespace DekaNews.Controllers
         [ValidateAntiForgeryToken]
         [Authorize]
         public async Task<IActionResult> Create([Bind("Id,Titulo,Texto")] Noticia noticia)
+        //public async Task<IActionResult> Create(IFormCollection form)
         {   
+            // Noticia noticia = new()
+            // {
+            //     Titulo = form["Titulo"]!,
+            //     Texto = form["Texto"]!
+            // };
             noticia.UsuarioId = User.Claims.FirstOrDefault()!.Value; 
+ 
             if (ModelState.IsValid)
             {
                 _context.Add(noticia);
@@ -160,4 +161,3 @@ namespace DekaNews.Controllers
             return _context.Noticias.Any(e => e.Id == id);
         }
     }
-}
