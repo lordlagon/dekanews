@@ -1,6 +1,5 @@
-using Microsoft.AspNetCore.Identity;
-
 namespace DekaNews.Models;
+
 [Table("Noticias")]
 public class Noticia
 {

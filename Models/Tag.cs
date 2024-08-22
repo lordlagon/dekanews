@@ -1,6 +1,6 @@
 namespace DekaNews.Models;
-[Table("Tags")]
 
+[Table("Tags")]
 public class Tag
 {
     [Key]

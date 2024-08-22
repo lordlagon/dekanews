@@ -1,4 +1,4 @@
-﻿@model DekaNews.Models.Noticia
+﻿@model DekaNews.ViewModels.NoticiaViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -20,8 +20,11 @@
                 <input asp-for="Texto" class="form-control" />
                 <span asp-validation-for="Texto" class="text-danger"></span>
             </div>
+            <div>
+                <select name="tagIds" asp-items="Model.SelectedTags" multiple="multiple" class="listbox"></select>
+            </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" asp-page-handler="Submit" />
             </div>
         </form>
     </div>
@@ -32,6 +35,14 @@
 </div>
 
 @section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $('.listbox').multiselect({
+                includeSelectAllOption: true
+            });
+        });
+    </script>
+
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

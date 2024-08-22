@@ -1,7 +1,3 @@
-using System.Diagnostics;
-using DekaNews.Models;
-using Microsoft.AspNetCore.Mvc;
-
 namespace DekaNews.Controllers;
 
 public class HomeController : Controller
