@@ -43,16 +43,16 @@ public class NoticiasController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Authorize]
-    public async Task<IActionResult> Create(IFormCollection form)
+    public async Task<IActionResult> Create(NoticiaViewModel form)
     {
         Noticia noticia = new()
         {
-            Titulo = form["Titulo"]!,
-            Texto = form["Texto"]!,
+            Titulo = form.Titulo,
+            Texto = form.Texto!,
             UsuarioId = User.Claims.FirstOrDefault()!.Value
         };
 
-        var tags = form["tagIds"].ToList();
+        var tags = form.TagIds.ToList();
 
         foreach (string tagId in tags)
         {
@@ -62,11 +62,12 @@ public class NoticiasController : Controller
 
         if (ModelState.IsValid)
         {
+            
             _context.Add(noticia);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(noticia);
+        return View(form);
     }
 
     // GET: Noticias/Edit/5
@@ -129,7 +130,7 @@ public class NoticiasController : Controller
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(noticia);
+            return View(form);
         }
         return NotFound();
     }

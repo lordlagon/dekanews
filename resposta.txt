@@ -1,0 +1,17 @@
+1 - Controller - Application - validations - Services - DataBase 
+
+2 - utilizando o Identity do Asp.Net é possível utilizar a Tag [Autorize] antes dos métodos. 
+Ela irá verificar se o usuário está logado, se não tiver ela direciona para a tela de login/registro
+
+3- o Ideal é criar um cache com Redis ou outra ferramenta para evitar bater tantas vezes no ORM. 
+Outra alternativa é fazer as chamadas de forma assincrona, se possível utilizar o RabbitMQ, 
+para enfileirar essas requisições. A mais radical seria passar a utilizar o Blazor, pois 
+ele possui o SignalR, o que cria um canal direto do browser com o server, evitando aquela 
+famosa piscada na tela.
+
+
+Desde já agradeço,
+André Deka Macedo
+
+41 99256-7641
+andredekamacedo@gmail.com
